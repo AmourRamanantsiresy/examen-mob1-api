@@ -76,4 +76,21 @@ export class WalletController {
       next(err);
     }
   };
+  static readonly getAllArchived: RequestHandler = async (req, res, next) => {
+    try {
+      const page = Number(req.query.page) || 1;
+      const pageSize = Number(req.query.pageSize) || 10;
+      const { isActive, name, walletType } = req.query as any;
+
+
+      if (walletType && !["CASH", "MOBILE_MONEY", "BANK", "DEBT"].includes(walletType))
+        throw new ApiError(`Expected "CASH", "MOBILE_MONEY", "BANK", "DEBT" for walletType but got ${walletType} instead`, 400);
+
+      const accountId = (req as any).account.id;
+      const data = await WalletServices.getAllArchived(accountId, { page, pageSize, isActive: getValuesFromQuery.boolean("isActive", isActive), name, walletType });
+      res.json(WalletMapper.toListResponse(data.values, { page, pageSize, elementCount: data.count }));
+    } catch (err) {
+      next(err);
+    }
+  };
 }
