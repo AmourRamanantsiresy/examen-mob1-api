@@ -81,6 +81,12 @@ export interface Wallet {
    * @memberof Wallet
    */
   walletAutomaticIncome?: WalletAutomaticIncome;
+  /**
+   *
+   * @type {boolean}
+   * @memberof Wallet
+   */
+  isArchived?: boolean;
 }
 
 /**
