@@ -159,5 +159,6 @@ model Configuration {
   loginWithoutPassword  Boolean
   currency              String
   subscriptionId        String?       @unique
+   pushToken            String?
   subscription          Subscription? @relation(fields: [subscriptionId], references: [id])
 }
