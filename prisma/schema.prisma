@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
@@ -159,5 +159,6 @@ model Configuration {
   loginWithoutPassword  Boolean
   currency              String
   subscriptionId        String?       @unique
+   pushToken            String?
   subscription          Subscription? @relation(fields: [subscriptionId], references: [id])
 }
